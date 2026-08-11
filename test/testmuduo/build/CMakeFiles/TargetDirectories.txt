@@ -1,3 +1,0 @@
-/home/lfz/projects/cpp/testmuduo/build/CMakeFiles/server.dir
-/home/lfz/projects/cpp/testmuduo/build/CMakeFiles/edit_cache.dir
-/home/lfz/projects/cpp/testmuduo/build/CMakeFiles/rebuild_cache.dir
