@@ -1,0 +1,35 @@
+#include <iostream>
+#include "chatserver.hpp"
+#include "chatservice.hpp"
+#include <signal.h>
+using namespace std;
+
+// 处理服务器ctr+c结束后，重置user的状态信息
+void resetHandler(int)
+{
+    ChatService::instance()->reset();
+    exit(0);
+}
+
+int main(int argc, char **argv)
+{
+    if(argc < 3)
+    {
+        cerr << "command invalid! example: ./ChatServer 127.0.0.1 6000" << endl;
+        exit(-1);
+    }
+
+    // 解析通过命令行参数传递的ip和port
+    char * ip = argv[1];
+    uint16_t port = atoi(argv[2]);
+
+    signal(SIGINT, resetHandler); // SIGINT中断信号（当你在终端或命令行运行一个 C++ 程序时，按下 Ctrl + C 组合键，操作系统就会向该程序发送一个 SIGINT 信号。）
+
+    EventLoop loop;
+    InetAddress addr(ip,port);
+    ChatServer server(&loop, addr, "ChatServer"); //创建ChatServer类对象，对象名为sever
+
+    server.start();
+    loop.loop();
+    return 0;
+}
